@@ -1,10 +1,13 @@
 let express = require('express');
+let cors = require('cors');
 let path = require('path');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 
 let index = require('./routes/index');
 let app = express();
+
+app.use(cors());
 
 // setup mongoDB
 let uri = 'mongodb://localhost:27017/hackernews';
