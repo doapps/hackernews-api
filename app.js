@@ -1,17 +1,17 @@
-let express = require('express');
-let cors = require('cors');
-let path = require('path');
-let mongoose = require('mongoose');
-let bodyParser = require('body-parser');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 let index = require('./routes/index');
-let app = express();
+const app = express();
 
 app.use(cors());
 
 // setup mongoDB
-let uri = 'mongodb://localhost:27017/hackernews';
-mongoose.connect(uri, {useMongoClient: true}).then(
+const uri = 'mongodb://localhost:27017/hackernews';
+mongoose.connect(uri, { useMongoClient: true }).then(
   () => { console.log('success') },
   err => { console.log('error') }
 );
@@ -28,14 +28,14 @@ app.use('/', index);
 // app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error('Not Found');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
