@@ -1,19 +1,33 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-let commentSchema = new Schema({
-    description: {
-        type: String,
-        required: true
-    },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    commentId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
+const commentSchema = new Schema({
+  description: {
+    type: String,
+    required: true,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Author',
+  },
+  publicationId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Publication',
+  },
+});
+
+commentSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    delete ret._id;
+    delete ret.__v;
+  },
 });
 
 module.exports = mongoose.model('Comment', commentSchema);
