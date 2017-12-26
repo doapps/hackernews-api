@@ -4,7 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-let index = require('./routes/index');
+const index = require('./routes/index');
+
 const app = express();
 
 app.use(cors());
@@ -12,8 +13,8 @@ app.use(cors());
 // setup mongoDB
 const uri = 'mongodb://localhost:27017/hackernews';
 mongoose.connect(uri, { useMongoClient: true }).then(
-  () => { console.log('success') },
-  err => { console.log('error') }
+  () => { console.log('success'); },
+  (err) => { console.log(err); }
 );
 
 // view engine setup
@@ -35,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
